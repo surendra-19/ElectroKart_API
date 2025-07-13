@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ElectroKasrt.DataAccess\ElectroKart.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
