@@ -27,5 +27,8 @@ namespace ElectroKart_API.Models.DTOS
         [Required]
         [Column(TypeName = "nvarchar(250)")]
         public string Address { get; set; } = "";
+        [Required]
+        [Column(TypeName = "nvarchar(50)")]
+        public string Password { get; set; } = "";
     }
 }
