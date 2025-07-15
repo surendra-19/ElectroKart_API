@@ -1,6 +1,6 @@
 ﻿using ElectroKart.Common.Models;
 using Microsoft.EntityFrameworkCore;
-namespace ElectroKart_API.Data
+namespace ElectroKart.Common.Data
 {
     public class Context:DbContext
     {

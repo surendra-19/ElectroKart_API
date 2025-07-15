@@ -1,9 +1,9 @@
 ﻿using ElectroKart.Service;
-using ElectroKart_API.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ElectroKart.Common.DTOS;
+using ElectroKart.Common.Data;
 
 namespace ElectroKart_API.Controllers
 {
@@ -19,41 +19,33 @@ namespace ElectroKart_API.Controllers
             _dbContext = context;
         }
         [HttpPost("login")]
-        public async Task<IActionResult> LoginUserAsync([FromBody] LoginDTO login)
+        public async Task<IActionResult> LoginUserAsync([FromBody] LoginDTO logindto)
         {
-            if(string.IsNullOrEmpty(login.Email) && string.IsNullOrEmpty(login.PhoneNumber))
+            try
             {
-                return BadRequest("Email or Phone Number is required.");
-
-            }
-            if (string.IsNullOrEmpty(login.Password))
-            {
-                return BadRequest("Password is required");
-            }
-            var user = await _dbContext.Customers.FirstOrDefaultAsync(
-                    customer => (customer.Email == login.Email || customer.Phone == login.PhoneNumber)
-            );
-            if(user == null)
-            {
-                return NotFound("Customer not found");
-            }
-            if(user.Password != login.Password)
-            {
-                return Unauthorized("Invalid password");
-            }
-            var res = new
-            {
-                message = "Login successful",
-                customer = new
+                var userstatus = await _authService.LoginUser(logindto);
+                if (userstatus == 1)
                 {
-                    user.Cust_Id,
-                    user.FirstName,
-                    user.LastName,
-                    user.Email,
-                    user.Phone
+                    // some logic
                 }
-            };
-            return Ok(res);
+                else if (userstatus == 2)
+                {
+                    // some logic
+                }
+                else if (userstatus == 3)
+                {
+                    // some logic
+                }
+                else
+                {
+                    // some logic
+                }
+            }
+            catch (Exception ex)
+            {
+                // handle exception
+            }
+
         }
     }
 }
