@@ -1,4 +1,4 @@
-﻿namespace ElectroKart_API.Models.DTOS
+﻿namespace ElectroKart.Common.DTOS
 {
     public class LoginDTO
     {

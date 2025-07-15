@@ -1,4 +1,4 @@
-﻿using ElectroKart_API.Models.DTOS;
+﻿using ElectroKart.Common.Models;
 using Microsoft.EntityFrameworkCore;
 namespace ElectroKart_API.Data
 {

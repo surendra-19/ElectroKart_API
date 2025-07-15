@@ -6,12 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="AuthDataAccess.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ElectroKart.Common\ElectroKart.Common.csproj" />
-  </ItemGroup>
-
 </Project>

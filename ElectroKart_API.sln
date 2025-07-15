@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroKart.Service", "Elec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroKart.DataAccess", "ElectroKasrt.DataAccess\ElectroKart.DataAccess.csproj", "{044D9493-4677-4906-AD12-AA569A54EA73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroKart.Common", "ElectroKart.Common\ElectroKart.Common.csproj", "{913D6677-AAC8-4AFA-AFFB-A6691FE3F92E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{044D9493-4677-4906-AD12-AA569A54EA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{044D9493-4677-4906-AD12-AA569A54EA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{044D9493-4677-4906-AD12-AA569A54EA73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{913D6677-AAC8-4AFA-AFFB-A6691FE3F92E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{913D6677-AAC8-4AFA-AFFB-A6691FE3F92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{913D6677-AAC8-4AFA-AFFB-A6691FE3F92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{913D6677-AAC8-4AFA-AFFB-A6691FE3F92E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ElectroKart_API.Models.DTOS
+namespace ElectroKart.Common.Models
 {
     public class Customer
     {

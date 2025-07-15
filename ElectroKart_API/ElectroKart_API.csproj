@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElectroKart.Common\ElectroKart.Common.csproj" />
     <ProjectReference Include="..\ElectroKart.Service\ElectroKart.Service.csproj" />
   </ItemGroup>
 

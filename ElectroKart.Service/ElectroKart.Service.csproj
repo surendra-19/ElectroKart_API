@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElectroKart.Common\ElectroKart.Common.csproj" />
     <ProjectReference Include="..\ElectroKasrt.DataAccess\ElectroKart.DataAccess.csproj" />
   </ItemGroup>
 

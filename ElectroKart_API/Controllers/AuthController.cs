@@ -1,9 +1,9 @@
 ﻿using ElectroKart.Service;
 using ElectroKart_API.Data;
-using ElectroKart_API.Models.DTOS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ElectroKart.Common.DTOS;
 
 namespace ElectroKart_API.Controllers
 {
