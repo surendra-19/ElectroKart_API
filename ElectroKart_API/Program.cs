@@ -1,4 +1,4 @@
-using ElectroKart_API.Data;
+using ElectroKart.Common.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<Context>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection"))
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DatabaseConnection"),
+        x => x.MigrationsAssembly("ElectroKart.Common")
+        )
 );
 
 var app = builder.Build();

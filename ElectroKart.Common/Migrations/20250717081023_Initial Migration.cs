@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace ElectroKart_API.Migrations
+namespace ElectroKart.Common.Migrations
 {
     /// <inheritdoc />
-    public partial class IntialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,8 @@ namespace ElectroKart_API.Migrations
                     LastName = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(20)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(250)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(250)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {

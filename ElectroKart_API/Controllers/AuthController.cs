@@ -23,27 +23,28 @@ namespace ElectroKart_API.Controllers
         {
             try
             {
-                var userstatus = await _authService.LoginUser(logindto);
-                if (userstatus == 1)
-                {
-                    // some logic
-                }
-                else if (userstatus == 2)
-                {
-                    // some logic
-                }
-                else if (userstatus == 3)
-                {
-                    // some logic
-                }
-                else
-                {
-                    // some logic
-                }
+                //var userstatus = await _authService.LoginUser(logindto);
+                //if (userstatus == 1)
+                //{
+                //    // some logic
+                //}
+                //else if (userstatus == 2)
+                //{
+                //    // some logic
+                //}
+                //else if (userstatus == 3)
+                //{
+                //    // some logic
+                //}
+                //else
+                //{
+                //    // some logic
+                //}
+                return Ok(await _authService.LoginUser(logindto));
             }
             catch (Exception ex)
             {
-                // handle exception
+                return StatusCode(500, "An error occurred while processing your request.");
             }
 
         }
