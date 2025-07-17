@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36121.58
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroKart_API", "ElectroKart_API\ElectroKart_API.csproj", "{6B3AA622-F108-4FF2-A223-D708021FC835}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroKart.API", "ElectroKart_API\ElectroKart.API.csproj", "{6B3AA622-F108-4FF2-A223-D708021FC835}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectroKart.Service", "ElectroKart.Service\ElectroKart.Service.csproj", "{EB3594B7-0029-4C76-A20D-A9E17E510D46}"
 EndProject

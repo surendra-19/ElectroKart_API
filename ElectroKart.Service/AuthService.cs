@@ -14,7 +14,7 @@ namespace ElectroKart.Service
             _dbcontext = context;
             _authDataAccess = authDataAccess;
         }
-        public async Task<Customer?> LoginUser(LoginDTO logindto)
+        public async Task<LoginResult> LoginUser(LoginDTO logindto)
         {
             return await _authDataAccess.LoginUser(logindto);
         }

@@ -3,6 +3,7 @@ using ElectroKart.Common.DTOS;
 using ElectroKart.Common.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace ElectroKart.DataAccess
 {
@@ -13,39 +14,51 @@ namespace ElectroKart.DataAccess
         {
             _configuration = configuration;
         }
-        public async Task<Customer?> LoginUser(LoginDTO login)
+        public async Task<LoginResult> LoginUser(LoginDTO login)
         {
             using var connection = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection"));
             using var command = new SqlCommand("usp_Customer_Login", connection)
             {
-                CommandType = System.Data.CommandType.StoredProcedure
+                CommandType = CommandType.StoredProcedure
             };
             command.Parameters.AddWithValue("@Email", login.Email ?? (object)DBNull.Value);
-            command.Parameters.AddWithValue("@PhoneNumber",login.PhoneNumber ?? (object)DBNull.Value);
-            command.Parameters.AddWithValue("@Password",login.Password);
+            command.Parameters.AddWithValue("@PhoneNumber", login.PhoneNumber ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Password", login.Password);
+
+            var status = new SqlParameter("@Status", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            command.Parameters.Add(status);
 
             await connection.OpenAsync();
 
             using var reader = await command.ExecuteReaderAsync();
 
+            Customer? customer = null;
+
             if (await reader.ReadAsync())
             {
-                if(reader.FieldCount == 1)
+                customer = new Customer
                 {
-                    //some code
-                }
-                var customer =  new Customer
-                {
-                    Cust_Id = reader.GetInt32(reader.GetOrdinal("Cust_Id")),
-                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                    Cust_Id = reader.GetInt32(reader.GetOrdinal("UserId")),
+                    FirstName = reader.GetString(reader.GetOrdinal("CustomerName")).Split(" ")[0],
+                    LastName = reader.GetString(reader.GetOrdinal("CustomerName")).Split(" ").ElementAtOrDefault(1) ?? "",
                     Email = reader.GetString(reader.GetOrdinal("Email")),
-                    Phone = reader.GetString(reader.GetOrdinal("Phone")),
+                    Phone = reader.GetString(reader.GetOrdinal("ContactNumber")),
                     Address = reader.GetString(reader.GetOrdinal("Address")),
                 };
-                return customer;
             }
-            return null;
-        } 
+
+            await reader.CloseAsync();
+
+            int statusparam = (int)(status.Value ?? 0);
+
+            return new LoginResult
+            {
+                Status = statusparam,
+                Customer = statusparam == 1 ? customer : null
+            };
+        }
     }
 }
