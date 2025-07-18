@@ -45,7 +45,7 @@ namespace ElectroKart.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while logging in for user: {User}", logindto.Email ?? logindto.PhoneNumber);
+                _logger.LogError(ex, "An error occurred while logging in for user: {User}", logindto.UserIdentifier);
                 return StatusCode(500, LoginMessages.ServerError);
             }
         }

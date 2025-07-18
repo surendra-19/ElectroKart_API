@@ -1,9 +1,22 @@
 using ElectroKart.Common.Data;
+using ElectroKart.DataAccess;
+using ElectroKart.Service;
 using Microsoft.EntityFrameworkCore;
+using Scrutor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Scan(scan => scan
+    .FromAssemblies(
+        typeof(AuthService).Assembly,     
+        typeof(AuthDataAccess).Assembly   
+    )
+    .AddClasses(classes => classes.Where(t =>
+        t.Name.EndsWith("Service") || t.Name.EndsWith("DataAccess")))
+    .AsSelf()
+    .WithScopedLifetime()
+);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

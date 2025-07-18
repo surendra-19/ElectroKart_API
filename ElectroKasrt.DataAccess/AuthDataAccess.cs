@@ -21,8 +21,7 @@ namespace ElectroKart.DataAccess
             {
                 CommandType = CommandType.StoredProcedure
             };
-            command.Parameters.AddWithValue("@Email", login.Email ?? (object)DBNull.Value);
-            command.Parameters.AddWithValue("@PhoneNumber", login.PhoneNumber ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@UserIdentifier", login.UserIdentifier);
             command.Parameters.AddWithValue("@Password", login.Password);
 
             var status = new SqlParameter("@Status", SqlDbType.Int)
