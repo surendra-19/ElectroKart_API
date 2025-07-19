@@ -19,17 +19,16 @@ namespace ElectroKart.Common.Models
         [Column(TypeName = "DECIMAL(15,2)")]
         public decimal Price { get; set; }
 
-        [Required]
         [Column(TypeName = "NVARCHAR(50)")]
         public string Brand { get; set; } = "";
 
-        [ForeignKey("CategoryId")]
         [Column("Category_Id")]
         public int CategoryId { get; set; }
 
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; set; }
+
         [Column(TypeName = "NVARCHAR(200)")]
         public string ImageUrl { get; set; } = "";
-
-        public Category? Category { get; set; }
     }
 }
