@@ -14,9 +14,13 @@ namespace ElectroKart.DataAccess
         {
             _configuration = configuration;
         }
+        public SqlConnection GetConnection()
+        {
+            return new SqlConnection(_configuration.GetConnectionString("DatabaseConnection"));
+        }
         public async Task<LoginResult> LoginUser(LoginDTO login)
         {
-            using var connection = new SqlConnection(_configuration.GetConnectionString("DatabaseConnection"));
+            using var connection = GetConnection();
             using var command = new SqlCommand("usp_Customer_Login", connection)
             {
                 CommandType = CommandType.StoredProcedure
@@ -58,6 +62,45 @@ namespace ElectroKart.DataAccess
                 Status = statusparam,
                 Customer = statusparam == 1 ? customer : null
             };
+        }
+        public async Task<bool> IsEmailRegistered(string email)
+        {
+            using var connection = GetConnection();
+            string query = "SELECT 1 FROM Customers WHERE Email = @Email";
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@Email",email);
+            await connection.OpenAsync();
+            var result = await command.ExecuteScalarAsync();
+            return result != null;
+        }
+        public async Task<bool> IsPhoneRegistered(string phone)
+        {
+            using var connection = GetConnection();
+            string query = "SELECT 1 FROM Customers WHERE Phone = @Phone";
+            using var command = new SqlCommand(query,connection);
+            command.Parameters.AddWithValue("@Phone",phone);
+            await connection.OpenAsync();
+            var result = await command.ExecuteScalarAsync();
+            return result != null;
+        }
+        public async Task<int> RegisterUser(SignUpDTO signUp)
+        {
+            using var connection = GetConnection();
+            using var command = new SqlCommand("usp_Customer_Registration", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@FirstName",signUp.FirstName);
+            command.Parameters.AddWithValue("@LastName", signUp.LastName);
+            command.Parameters.AddWithValue("@Email", signUp.Email);
+            command.Parameters.AddWithValue("@Phone", signUp.Phone);
+            command.Parameters.AddWithValue("@Address", signUp.Address);
+            command.Parameters.AddWithValue("@Password", signUp.Password);
+
+            await connection.OpenAsync();
+
+            int result = await command.ExecuteNonQueryAsync();
+            return result > 0 ? 1 : 0; // 1 means success, 0 means failure
         }
     }
 }

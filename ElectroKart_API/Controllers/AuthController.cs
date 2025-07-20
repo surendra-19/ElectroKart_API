@@ -49,5 +49,33 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(500, LoginMessages.ServerError);
             }
         }
+        [HttpPost("SignUp")]
+        public async Task<IActionResult> RegisterUserAsync([FromBody] SignUpDTO signUpDTO)
+        {
+            try
+            {
+                // Verifying if the email is already registered
+                var RegisteredEmailVerification = await _authService.IsEmailRegistered(signUpDTO.Email);
+                // Verifying if the phonenumber is already registered
+                var RegisteredPhoneVerification = await _authService.IsPhoneRegistered(signUpDTO.Phone);
+
+                if (RegisteredEmailVerification)
+                {
+                    return Conflict(SignUpMessages.EmailAlreadyRegistered);
+                }
+                else if (RegisteredPhoneVerification)
+                {
+                    return Conflict(SignUpMessages.PhoneAlreadyExists);
+                }
+                var result = await _authService.RegisterUser(signUpDTO);
+                return result == 1 ? Ok(SignUpMessages.SignUpSuccess) : StatusCode(500, SignUpMessages.ServerError);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex,"An error occured while registering the user : {}",signUpDTO.Email);
+                return StatusCode(500,SignUpMessages.ServerError);
+            }
+        }
     }
 }

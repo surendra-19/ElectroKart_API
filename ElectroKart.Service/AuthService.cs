@@ -18,5 +18,18 @@ namespace ElectroKart.Service
         {
             return await _authDataAccess.LoginUser(logindto);
         }
+        public async Task<bool> IsEmailRegistered(string email)
+        {
+            return await _authDataAccess.IsEmailRegistered(email);
+        }
+        public async Task<bool> IsPhoneRegistered(string phone)
+        {
+            return await _authDataAccess.IsPhoneRegistered(phone);
+        }
+        public async Task<int> RegisterUser(SignUpDTO signUpDTO)
+        {
+            return await _authDataAccess.RegisterUser(signUpDTO);
+        } 
+
     }
 }
