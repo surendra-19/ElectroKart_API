@@ -1,4 +1,5 @@
-﻿using ElectroKart.Common.Models;
+﻿using ElectroKart.Common.Messages;
+using ElectroKart.Common.Models;
 using ElectroKart.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,20 @@ namespace ElectroKart.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly ILogger _logger;
         private readonly ProductsService _productsService;
-        public ProductsController(ProductsService productService)
+        public ProductsController(ProductsService productService,ILogger logger)
         {
             _productsService = productService;
+            _logger = logger;
         }
+        /// <summary>
+        /// Retrieves all products from the database.
+        /// </summary>
+        /// <returns>
+        /// Returns a 200 OK response with a list of products and a success message.
+        /// If an error occurs, returns a 500 Internal Server Error with an error message.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> GetAllProductsAsync()
         {
@@ -21,17 +31,26 @@ namespace ElectroKart.API.Controllers
             {
                 List<Product> products = new List<Product>();
                 products = await _productsService.GetAllProducts();
-                if (products == null || products.Count == 0)
-                {
-                    return NotFound("No products found.");
-                }
-                return Ok(products);
+                return Ok(new {
+                    Data = products,
+                    Message = RetrieveProductsMessages.Success
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving products.");
+                _logger.LogError(ex, RetrieveProductsMessages.Failed);
+                return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
             }
         }
+        /// <summary>
+        /// Retrieves product by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the product to retrieve.</param>
+        /// <returns>
+        /// Returns a 200 OK response with the product and a success message if found.
+        /// Returns a 404 Not Found if no product exists with the given ID.
+        /// Returns a 500 Internal Server Error if an unexpected error occurs.
+        /// </returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductByIdAsync([FromRoute] int id)
         {
@@ -42,11 +61,34 @@ namespace ElectroKart.API.Controllers
                 {
                     return NotFound($"Product with ID {id} not found.");
                 }
-                return Ok(product);
+                return Ok(new { data = product, message = RetrieveProductsMessages.Success});
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving the product.");
+                _logger.LogError(ex, $"An error occured while retrieving the product : {id}");
+                return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
+            }
+        }
+        [HttpGet("Search")]
+        public async Task<IActionResult> SearchProductByNameAsync([FromQuery] string productName)
+        {
+            try
+            {
+                List<Product>? products = await _productsService.SearchProductByName(productName);
+                if(products == null)
+                {
+                    return NotFound();
+                }
+                return Ok(new
+                {
+                    data = products,
+                    message = RetrieveProductsMessages.Success
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while searching for products.");
+                return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
             }
         }
     }

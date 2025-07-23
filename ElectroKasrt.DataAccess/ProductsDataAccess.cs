@@ -69,6 +69,24 @@ namespace ElectroKart.DataAccess
 
             return null;
         }
-
+        public async Task<List<Product>?> SearchProductByName(string productName)
+        {
+            using var connection = GetConnection();
+            string query = "SELECT ProductName FROM Products WHERE ProductName LIKE '%'+@ProductName+'%'";
+            using var command = new SqlCommand(query,connection);
+            command.Parameters.AddWithValue("@ProductName", productName);
+            await connection.OpenAsync();
+            List<Product> products = new List<Product>();
+            var reader = await command.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                Product product = new Product
+                {
+                    ProductName = reader.GetString(reader.GetOrdinal("ProductName"))
+                };
+                products.Add(product);
+            }
+            return products.Count > 0 ? products : null;
+        }
     }
 }

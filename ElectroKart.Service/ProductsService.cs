@@ -23,5 +23,9 @@ namespace ElectroKart.Service
         {
             return await _productsDataAccess.GetProductById(id);
         }
+        public async Task<List<Product>?> SearchProductByName(string productName)
+        {
+            return await _productsDataAccess.SearchProductByName(productName);
+        }
     }
 }
