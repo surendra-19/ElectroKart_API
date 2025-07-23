@@ -26,15 +26,20 @@ namespace ElectroKart.DataAccess
         public async Task<int> UpdateCustomerDetails(CustomerUpdateDTO customer, int Cust_Id)
         {
             using var connection = GetConnection();
-            using var command = new SqlCommand("usp_Customer_Details_Update", connection){
-                CommandType = CommandType.StoredProcedure
-            };
-
+            string query = @"UPDATE Customers
+                             SET FirstName = @FirstName,
+                                 LastName = @LastName,
+                                 Email = @Email,
+                                 Phone = @Phone,
+                                 Address = @Address
+                             WHERE Cust_Id = @Cust_Id";
+            using var command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@FirstName", customer.FirstName);
             command.Parameters.AddWithValue("@LastName", customer.LastName);
             command.Parameters.AddWithValue("@Email", customer.Email);
             command.Parameters.AddWithValue("@Phone", customer.Phone);
             command.Parameters.AddWithValue("@Address", customer.Address);
+            command.Parameters.AddWithValue("@Cust_Id", Cust_Id);
             await connection.OpenAsync();
             int result = await command.ExecuteNonQueryAsync();
             return result == 1 ? 1 : 0;

@@ -55,9 +55,9 @@ namespace ElectroKart.API.Controllers
             try
             {
                 // Verifying if the email is already registered
-                var RegisteredEmailVerification = await _authService.IsEmailRegistered(signUpDTO.Email);
+                var RegisteredEmailVerification = await _authService.IsEmailRegistered(email:signUpDTO.Email, Cust_Id:null);
                 // Verifying if the phonenumber is already registered
-                var RegisteredPhoneVerification = await _authService.IsPhoneRegistered(signUpDTO.Phone);
+                var RegisteredPhoneVerification = await _authService.IsPhoneRegistered(phone:signUpDTO.Phone, Cust_Id:null);
 
                 if (RegisteredEmailVerification)
                 {

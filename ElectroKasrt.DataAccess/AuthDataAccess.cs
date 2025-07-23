@@ -63,22 +63,34 @@ namespace ElectroKart.DataAccess
                 Customer = statusparam == 1 ? customer : null
             };
         }
-        public async Task<bool> IsEmailRegistered(string email)
+        public async Task<bool> IsEmailRegistered(string email, int? Cust_Id)
         {
             using var connection = GetConnection();
-            string query = "SELECT 1 FROM Customers WHERE Email = @Email";
+            string query = (Cust_Id == null)
+                ? "SELECT 1 FROM Customers WHERE Email = @Email"
+                : "SELECT 1 FROM Customers WHERE Email = @Email AND Cust_Id != @Cust_Id";
             using var command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Email",email);
+            if (Cust_Id != null)
+            {
+                command.Parameters.AddWithValue("@Cust_Id", Cust_Id);
+            }
             await connection.OpenAsync();
             var result = await command.ExecuteScalarAsync();
             return result != null;
         }
-        public async Task<bool> IsPhoneRegistered(string phone)
+        public async Task<bool> IsPhoneRegistered(string phone,int? Cust_Id)
         {
             using var connection = GetConnection();
-            string query = "SELECT 1 FROM Customers WHERE Phone = @Phone";
-            using var command = new SqlCommand(query,connection);
+            string query = (Cust_Id == null)
+                ? "SELECT 1 FROM Customers WHERE Phone = @Phone"
+                : "SELECT 1 FROM Customers WHERE Phone = @Phone AND Cust_Id != @Cust_Id";
+            using var command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Phone",phone);
+            if (Cust_Id != null)
+            {
+                command.Parameters.AddWithValue("@Cust_Id",Cust_Id);
+            }
             await connection.OpenAsync();
             var result = await command.ExecuteScalarAsync();
             return result != null;

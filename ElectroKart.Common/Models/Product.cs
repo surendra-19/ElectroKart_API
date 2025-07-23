@@ -29,6 +29,6 @@ namespace ElectroKart.Common.Models
         public Category? Category { get; set; }
 
         [Column(TypeName = "NVARCHAR(200)")]
-        public string ImageUrl { get; set; } = "";
+        public string? ImageUrl { get; set; }
     }
 }

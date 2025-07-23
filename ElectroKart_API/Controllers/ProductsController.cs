@@ -33,7 +33,7 @@ namespace ElectroKart.API.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProductByIdAsync(int id)
+        public async Task<IActionResult> GetProductByIdAsync([FromRoute] int id)
         {
             try
             {
