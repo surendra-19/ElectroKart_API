@@ -19,11 +19,7 @@ namespace ElectroKart.API.Controllers
         }
         /// <summary>
         /// Retrieves all products from the database.
-        /// </summary>
-        /// <returns>
-        /// Returns a 200 OK response with a list of products and a success message.
-        /// If an error occurs, returns a 500 Internal Server Error with an error message.
-        /// </returns>
+        /// </summary
         [HttpGet]
         public async Task<IActionResult> GetAllProductsAsync()
         {
@@ -46,11 +42,6 @@ namespace ElectroKart.API.Controllers
         /// Retrieves product by its ID.
         /// </summary>
         /// <param name="id">The ID of the product to retrieve.</param>
-        /// <returns>
-        /// Returns a 200 OK response with the product and a success message if found.
-        /// Returns a 404 Not Found if no product exists with the given ID.
-        /// Returns a 500 Internal Server Error if an unexpected error occurs.
-        /// </returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductByIdAsync([FromRoute] int id)
         {

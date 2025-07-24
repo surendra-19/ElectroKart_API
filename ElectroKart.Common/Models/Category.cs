@@ -11,6 +11,6 @@ namespace ElectroKart.Common.Models
         [Required]
         [Column(TypeName = "NVARCHAR(100)")]
         public string CategoryName { get; set; } = "";
-
+        public int isActive { get; set; }
     }
 }

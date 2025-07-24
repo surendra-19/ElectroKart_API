@@ -33,5 +33,6 @@ namespace ElectroKart.Common.Models
 
         [Column(TypeName = "NVARCHAR(200)")]
         public string? ImageUrl { get; set; }
+        public int isActive { get; set; }
     }
 }
