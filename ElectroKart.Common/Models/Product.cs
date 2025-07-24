@@ -18,9 +18,12 @@ namespace ElectroKart.Common.Models
         [Required]
         [Column(TypeName = "DECIMAL(15,2)")]
         public decimal Price { get; set; }
+        
+        [Column("Brand_Id")]
+        public int BrandId { get; set; }
 
-        [Column(TypeName = "NVARCHAR(50)")]
-        public string Brand { get; set; } = "";
+        [ForeignKey("BrandId")]
+        public Brand? BrandNavigation { get; set; }
 
         [Column("Category_Id")]
         public int CategoryId { get; set; }

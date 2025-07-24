@@ -36,7 +36,7 @@ namespace ElectroKart.DataAccess
                     ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
                     ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
                     Price = reader.GetDecimal(reader.GetOrdinal("Price")),
-                    Brand = reader.GetString(reader.GetOrdinal("Brand")),
+                    BrandId = reader.GetInt32(reader.GetOrdinal("Brand_Id")),
                     ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                 };
                 products.Add(product);
@@ -61,7 +61,7 @@ namespace ElectroKart.DataAccess
                     ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
                     ProductDescription = reader.GetString(reader.GetOrdinal("ProductDescription")),
                     Price = reader.GetDecimal(reader.GetOrdinal("Price")),
-                    Brand = reader.GetString(reader.GetOrdinal("Brand")),
+                    BrandId = reader.GetInt32(reader.GetOrdinal("Brand_Id")),
                     CategoryId = reader.GetInt32(reader.GetOrdinal("Category_Id")),
                     ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                 };

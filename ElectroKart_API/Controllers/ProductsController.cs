@@ -10,9 +10,9 @@ namespace ElectroKart.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<ProductsController> _logger;
         private readonly ProductsService _productsService;
-        public ProductsController(ProductsService productService,ILogger logger)
+        public ProductsController(ProductsService productService,ILogger<ProductsController> logger)
         {
             _productsService = productService;
             _logger = logger;

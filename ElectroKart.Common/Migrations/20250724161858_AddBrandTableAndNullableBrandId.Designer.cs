@@ -4,6 +4,7 @@ using ElectroKart.Common.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectroKart.Common.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250724161858_AddBrandTableAndNullableBrandId")]
+    partial class AddBrandTableAndNullableBrandId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,7 +191,11 @@ namespace ElectroKart.Common.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
-                    b.Property<int>("BrandId")
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(50)");
+
+                    b.Property<int?>("BrandId")
                         .HasColumnType("int")
                         .HasColumnName("Brand_Id");
 
@@ -264,9 +271,7 @@ namespace ElectroKart.Common.Migrations
                 {
                     b.HasOne("ElectroKart.Common.Models.Brand", "BrandNavigation")
                         .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("ElectroKart.Common.Models.Category", "Category")
                         .WithMany()
