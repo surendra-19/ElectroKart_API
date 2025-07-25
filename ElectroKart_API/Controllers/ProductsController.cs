@@ -20,7 +20,7 @@ namespace ElectroKart.API.Controllers
         /// <summary>
         /// Retrieves all products from the database.
         /// </summary
-        [HttpGet]
+        [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetAllProductsAsync()
         {
             try
@@ -42,7 +42,7 @@ namespace ElectroKart.API.Controllers
         /// Retrieves product by its ID.
         /// </summary>
         /// <param name="id">The ID of the product to retrieve.</param>
-        [HttpGet("{id}")]
+        [HttpGet("GetProductById/{id}")]
         public async Task<IActionResult> GetProductByIdAsync([FromRoute] int id)
         {
             try
@@ -60,7 +60,7 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
             }
         }
-        [HttpGet("Search")]
+        [HttpGet("SearchProduct")]
         public async Task<IActionResult> SearchProductByNameAsync([FromQuery] string productName)
         {
             try

@@ -17,7 +17,7 @@ namespace ElectroKart.API.Controllers
             _customerService = customerService;
             _authService = authService;
         }
-        [HttpPut("UpdateCustomer")]
+        [HttpPut("UpdateCustomerDetails")]
         public async Task<IActionResult> UpdateCustomerDetailsAsync([FromBody] CustomerUpdateDTO customer, int Cust_Id)
         {
             var EmailCheck = await _authService.IsEmailRegistered(customer.Email, Cust_Id);

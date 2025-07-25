@@ -19,7 +19,7 @@ namespace ElectroKart.API.Controllers
             _authService = authService;
             _logger = logger;
         }
-        [HttpPost("login")]
+        [HttpPost("loginUser")]
         public async Task<IActionResult> LoginUserAsync([FromBody] LoginDTO logindto)
         {
             try
@@ -49,7 +49,7 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(500, LoginMessages.ServerError);
             }
         }
-        [HttpPost("SignUp")]
+        [HttpPost("SignUpUser")]
         public async Task<IActionResult> RegisterUserAsync([FromBody] SignUpDTO signUpDTO)
         {
             try

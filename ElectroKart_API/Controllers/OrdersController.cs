@@ -23,7 +23,7 @@ namespace ElectroKart.API.Controllers
         /// and returns an appropriate HTTP response based on the outcome.
         /// </summary>
         /// <param name="placeOrderDTO">The order details, including customer ID and list of products with quantities.</param>
-        [HttpPost]
+        [HttpPost("newOrder")]
         public async Task<IActionResult> CreateCustomerOrderAsync([FromBody]PlaceOrderDTO placeOrderDTO)
         {
             try
