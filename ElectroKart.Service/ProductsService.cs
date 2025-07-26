@@ -19,13 +19,17 @@ namespace ElectroKart.Service
         {
             return await _productsDataAccess.GetAllProducts();
         }
-        public async Task<Product?> GetProductById(int id)
+        public async Task<Product?> GetProductByProductId(int id)
         {
-            return await _productsDataAccess.GetProductById(id);
+            return await _productsDataAccess.GetProductByProductId(id);
         }
         public async Task<List<Product>?> SearchProductByName(string productName)
         {
             return await _productsDataAccess.SearchProductByName(productName);
+        }
+        public async Task<List<Product>?> GetProductsByCategoryId(int categoryId)
+        {
+            return await _productsDataAccess.GetProductsByCategoryId(categoryId);
         }
     }
 }

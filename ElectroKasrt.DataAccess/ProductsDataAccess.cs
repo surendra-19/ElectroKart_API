@@ -43,7 +43,7 @@ namespace ElectroKart.DataAccess
             }
             return products;
         }
-        public async Task<Product?> GetProductById(int id)
+        public async Task<Product?> GetProductByProductId(int id)
         {
             using var connection = GetConnection();
             string query = @"SELECT ProductId, ProductName, ProductDescription, Price, Brand, Category_Id, ImageUrl 
@@ -87,6 +87,32 @@ namespace ElectroKart.DataAccess
                 products.Add(product);
             }
             return products.Count > 0 ? products : null;
+        }
+        public async Task<List<Product>?> GetProductsByCategoryId(int categoryId)
+        {
+            using var connection = GetConnection();
+            string query = @"SELECT * FROM Products WHERE Category_Id = @CategoryId";
+            using var command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@CategoryId", categoryId);
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+            List<Product> products = new List<Product>();
+            while (reader.Read())
+            {
+                Product product = new Product
+                {
+                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
+                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                    ProductDescription = reader.GetString(reader.GetOrdinal("ProductDescription")),
+                    Price = reader.GetDecimal(reader.GetOrdinal("Price")),
+                    BrandId = reader.GetInt32(reader.GetOrdinal("Brand_Id")),
+                    CategoryId = reader.GetInt32(reader.GetOrdinal("Category_Id")),
+                    ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                    isActive = reader.GetInt32(reader.GetOrdinal("isActive"))
+                };
+                products.Add(product);
+            }
+            return products;
         }
     }
 }

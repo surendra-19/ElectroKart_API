@@ -51,5 +51,66 @@ namespace ElectroKart.DataAccess
             await command.ExecuteNonQueryAsync();
             return (int)status.Value;
         }
+        public async Task<OrderResponse> GetOrdersByCustomerId(int customerId)
+        {
+            using var connection = GetConnection();
+            using var command = new SqlCommand("usp_GetOrdersByCustId", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            command.Parameters.AddWithValue("@Cust_Id", customerId);
+            var statusParam = new SqlParameter("@Status", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            command.Parameters.Add(statusParam);
+
+            var orderDict = new Dictionary<int, OrderDTO>();
+
+            await connection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                int orderId = reader.GetInt32(reader.GetOrdinal("OrderId"));
+
+                if (!orderDict.ContainsKey(orderId))
+                {
+                    var order = new OrderDTO
+                    {
+                        OrderId = orderId,
+                        OrderDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                        ShippedDate = reader.IsDBNull(reader.GetOrdinal("ShippedDate")) ? null : reader.GetDateTime(reader.GetOrdinal("ShippedDate")),
+                        DeliveryDate = reader.IsDBNull(reader.GetOrdinal("ReachedDate")) ? null : reader.GetDateTime(reader.GetOrdinal("ReachedDate")),
+                        TotalAmount = reader.GetDecimal(reader.GetOrdinal("TotalAmount")),
+                        OrderStatus = reader.GetString(reader.GetOrdinal("OrderStatus"))
+                    };
+                    orderDict[orderId] = order;
+                }
+
+                var item = new OrderItemDTO
+                {
+                    OrderItemId = reader.GetInt32(reader.GetOrdinal("OrderItemId")),
+                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
+                    Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+                    UnitPrice = reader.GetDecimal(reader.GetOrdinal("EachItemPrice"))
+                };
+
+                orderDict[orderId].OrderItems.Add(item);
+            }
+            await reader.CloseAsync();
+
+            int status = (int)(statusParam.Value ?? 0);
+
+            return new OrderResponse
+            {
+                Orders = orderDict.Values.ToList(),
+                StatusCode = status,
+                Message = status == 2 ? "Orders retrieved successfully." : "No orders found or an error occurred."
+            };
+        }
+
+
     }
 }

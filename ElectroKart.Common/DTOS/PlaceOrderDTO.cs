@@ -11,6 +11,6 @@ namespace ElectroKart.Common.DTOS
     public class PlaceOrderDTO
     {
         public int Cust_Id { get; set; }
-        public List<OrderItemsDTO> OrderItems { get; set; } = new List<OrderItemsDTO>();
+        public List<OrderItemsCreateDTO> OrderItems { get; set; } = new List<OrderItemsCreateDTO>();
     }
 }

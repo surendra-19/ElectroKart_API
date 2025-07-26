@@ -19,5 +19,9 @@ namespace ElectroKart.Service
         {
             return await _OrderDataAccess.CreateCustomerOrder(placeOrder);
         }
+        public async Task<OrderResponse> GetOrdersByCustomerId(int customerId)
+        {
+            return await _OrderDataAccess.GetOrdersByCustomerId(customerId);
+        }
     }
 }

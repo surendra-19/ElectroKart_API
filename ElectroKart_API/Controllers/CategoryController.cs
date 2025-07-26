@@ -9,7 +9,6 @@ namespace ElectroKart.API.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ILogger<CategoryController> _logger;
-
         private readonly CategoryService _categoryService;
         public CategoryController(ILogger<CategoryController> logger, CategoryService categoryService)
         {
@@ -18,12 +17,20 @@ namespace ElectroKart.API.Controllers
         [HttpGet("GetAllCategories")]
         public async Task<IActionResult> GetAllCategoriesAsync()
         {
-            var categories = await _categoryService.GetAllCategories();
-            if (categories == null || !categories.Any())
+            try
             {
-                return NotFound("No categories found.");
+                var categories = await _categoryService.GetAllCategories();
+                if (categories == null || !categories.Any())
+                {
+                    return NotFound("No categories found.");
+                }
+                return Ok(categories);
             }
-            return Ok(categories);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching categories.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
         }
     }
 }

@@ -42,12 +42,12 @@ namespace ElectroKart.API.Controllers
         /// Retrieves product by its ID.
         /// </summary>
         /// <param name="id">The ID of the product to retrieve.</param>
-        [HttpGet("GetProductById/{id}")]
-        public async Task<IActionResult> GetProductByIdAsync([FromRoute] int id)
+        [HttpGet("GetProductByProductId/{id}")]
+        public async Task<IActionResult> GetProductByProductIdAsync([FromRoute] int id)
         {
             try
             {
-                Product? product = await _productsService.GetProductById(id);
+                Product? product = await _productsService.GetProductByProductId(id);
                 if (product == null)
                 {
                     return NotFound($"Product with ID {id} not found.");
@@ -79,6 +79,28 @@ namespace ElectroKart.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while searching for products.");
+                return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
+            }
+        }
+        [HttpGet("GetProductByCategoryId/{categoryId}")]
+        public async Task<IActionResult> GetProductByCategoryIdAsync([FromRoute] int categoryId)
+        {
+            try
+            {
+                List<Product>? products = await _productsService.GetProductsByCategoryId(categoryId);
+                if (products == null || !products.Any())
+                {
+                    return NotFound($"No products found for category ID {categoryId}.");
+                }
+                return Ok(new
+                {
+                    data = products,
+                    message = RetrieveProductsMessages.Success
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while retrieving products for category ID {categoryId}.");
                 return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
             }
         }

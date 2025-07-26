@@ -1,5 +1,6 @@
 ﻿using ElectroKart.Common.DTOS;
 using ElectroKart.Common.Messages;
+using ElectroKart.Common.Models;
 using ElectroKart.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace ElectroKart.API.Controllers
         /// and returns an appropriate HTTP response based on the outcome.
         /// </summary>
         /// <param name="placeOrderDTO">The order details, including customer ID and list of products with quantities.</param>
-        [HttpPost("newOrder")]
+        [HttpPost("placeOrder")]
         public async Task<IActionResult> CreateCustomerOrderAsync([FromBody]PlaceOrderDTO placeOrderDTO)
         {
             try
@@ -52,5 +53,24 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, OrderProductMessages.OrderError);
             }
         }
+        [HttpGet("GetOrdersByCustomerId/{customerId}")]
+        public async Task<IActionResult> GetOrdersByCustomerIdAsync([FromRoute] int customerId)
+        {
+            try
+            {
+                var response = await _orderService.GetOrdersByCustomerId(customerId);
+                if (response.StatusCode != 2)
+                {
+                    return NotFound(response.Message);
+                }
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while retrieving the orders for customer ID {customerId}");
+                return StatusCode(StatusCodes.Status500InternalServerError, OrderProductMessages.OrderError);
+            }
+        }
+
     }
 }
