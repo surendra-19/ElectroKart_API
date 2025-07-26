@@ -23,7 +23,7 @@ namespace ElectroKart.Common.Models
         public int BrandId { get; set; }
 
         [ForeignKey("BrandId")]
-        public Brand? BrandNavigation { get; set; }
+        public Brand BrandNavigation { get; set; } = new Brand();
 
         [Column("Category_Id")]
         public int CategoryId { get; set; }

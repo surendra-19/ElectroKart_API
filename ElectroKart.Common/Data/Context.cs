@@ -15,5 +15,6 @@ namespace ElectroKart.Common.Data
         public DbSet<Inventory> Inventory { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }
