@@ -1,4 +1,5 @@
-﻿using ElectroKart.DataAccess;
+﻿using ElectroKart.Common.DTOS;
+using ElectroKart.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,17 @@ namespace ElectroKart.Service
         {
             return await _categoryDataAccess.GetCartItems(customerId);
         }
-        public async Task<bool> RemoveFromCart(int itemId,int customerId)
+        public async Task<int> RemoveFromCart(int itemId,int customerId)
         {
-            return await _categoryDataAccess.RemoveFromCart(itemId, customerId);
+            return await _categoryDataAccess.RemoveFromCart(itemId:itemId, customerId:customerId);
+        }
+        public async Task<bool> ClearCart(int customerId)
+        {
+            return await _categoryDataAccess.ClearCart(customerId);
+        }
+        public async Task<bool> AddToCart(CartItemDTO cartItemDTO)
+        {
+            return await _categoryDataAccess.AddToCart(cartItemDTO);
         }
     }
 }

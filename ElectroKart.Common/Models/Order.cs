@@ -29,5 +29,6 @@ namespace ElectroKart.Common.Models
         [Required]
         [Column(TypeName = "decimal(15,2)")]
         public decimal TotalAmount { get; set; }
+        public DateTime? CancelledDate { get; set; }
     }
 }
