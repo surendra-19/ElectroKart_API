@@ -10,11 +10,11 @@ namespace ElectroKart.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthorizationController : ControllerBase
     {
-        private readonly AuthService _authService;
-        private readonly ILogger<AuthController> _logger;
-        public AuthController(AuthService authService, ILogger<AuthController> logger)
+        private readonly AuthorizationService _authService;
+        private readonly ILogger<AuthorizationController> _logger;
+        public AuthorizationController(AuthorizationService authService, ILogger<AuthorizationController> logger)
         {
             _authService = authService;
             _logger = logger;

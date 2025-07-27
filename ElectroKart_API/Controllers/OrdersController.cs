@@ -71,10 +71,23 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, OrderProductMessages.OrderError);
             }
         }
-        //[HttpPut("CancelOrder")]
-        //public async Task<IActionResult> CancelOrderAsync()
-        //{
-
-        //}
+        [HttpPut("CancelOrder")]
+        public async Task<IActionResult> CancelOrderAsync(CancelOrderDTO cancelOrder)
+        {
+            try
+            {
+                int result = await _orderService.CancelOrder(cancelOrder);
+                if (result == 0)
+                {
+                    return BadRequest("unable to cancel the order");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while cancelling the order.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

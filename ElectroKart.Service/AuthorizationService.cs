@@ -5,11 +5,11 @@ using ElectroKart.DataAccess;
 
 namespace ElectroKart.Service
 {
-    public class AuthService
+    public class AuthorizationService
     {
         private readonly Context _dbcontext;
-        private readonly AuthDataAccess _authDataAccess;
-        public AuthService(Context context,AuthDataAccess authDataAccess)
+        private readonly AuthorizationDataAccess _authDataAccess;
+        public AuthorizationService(Context context,AuthorizationDataAccess authDataAccess)
         {
             _dbcontext = context;
             _authDataAccess = authDataAccess;

@@ -23,5 +23,9 @@ namespace ElectroKart.Service
         {
             return await _OrderDataAccess.GetOrdersByCustomerId(customerId);
         }
+        public async Task<int> CancelOrder(CancelOrderDTO cancelOrder)
+        {
+            return await _OrderDataAccess.CancelOrder(cancelOrder);
+        }
     }
 }

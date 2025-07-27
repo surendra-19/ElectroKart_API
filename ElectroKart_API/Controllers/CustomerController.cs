@@ -11,8 +11,8 @@ namespace ElectroKart.API.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly CustomerService _customerService;
-        private readonly AuthService _authService;
-        public CustomerController(CustomerService customerService, AuthService authService)
+        private readonly AuthorizationService _authService;
+        public CustomerController(CustomerService customerService, AuthorizationService authService)
         {
             _customerService = customerService;
             _authService = authService;

@@ -110,7 +110,25 @@ namespace ElectroKart.DataAccess
                 Message = status == 2 ? "Orders retrieved successfully." : "No orders found or an error occurred."
             };
         }
-
+        public async Task<int> CancelOrder(CancelOrderDTO cancelOrderDTO)
+        {
+            using var connection = GetConnection();
+            using var command = new SqlCommand("usp_CancelCustomerOrder",connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@OrderID", cancelOrderDTO.OrderID);
+            var StatusParam = new SqlParameter("@Status", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+            command.Parameters.Add(StatusParam);
+            await connection.OpenAsync();
+            await command.ExecuteNonQueryAsync();
+            await connection.CloseAsync();
+            cancelOrderDTO.Status = (int)StatusParam.Value;
+            return cancelOrderDTO.Status;
+        }
 
     }
 }

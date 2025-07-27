@@ -9,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.Scan(scan => scan
     .FromAssemblies(
-        typeof(AuthService).Assembly,     
-        typeof(AuthDataAccess).Assembly   
+        typeof(AuthorizationService).Assembly,     
+        typeof(AuthorizationDataAccess).Assembly   
     )
     .AddClasses(classes => classes.Where(t =>
         t.Name.EndsWith("Service") || t.Name.EndsWith("DataAccess")))

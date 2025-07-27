@@ -7,10 +7,10 @@ using System.Data;
 
 namespace ElectroKart.DataAccess
 {
-    public class AuthDataAccess
+    public class AuthorizationDataAccess
     {
         private readonly IConfiguration _configuration;
-        public AuthDataAccess(IConfiguration configuration )
+        public AuthorizationDataAccess(IConfiguration configuration )
         {
             _configuration = configuration;
         }
