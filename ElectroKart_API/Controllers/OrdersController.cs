@@ -53,6 +53,15 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, OrderProductMessages.OrderError);
             }
         }
+        /// <summary>
+        /// Retrieves all orders placed by a specific customer.
+        /// </summary>
+        /// <param name="customerId">The ID of the customer whose orders are to be retrieved.</param>
+        /// <returns>
+        /// 200 OK with the list of orders if found,  
+        /// 404 Not Found if no orders are available,  
+        /// 500 Internal Server Error if an exception occurs.
+        /// </returns>
         [HttpGet("GetOrdersByCustomerId/{customerId}")]
         public async Task<IActionResult> GetOrdersByCustomerIdAsync([FromRoute] int customerId)
         {
@@ -71,12 +80,21 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, OrderProductMessages.OrderError);
             }
         }
+        /// <summary>
+        /// Cancels a specific order for a customer.
+        /// </summary>
+        /// <param name="cancelOrderDTO">The details of the order to be canceled.</param>
+        /// <returns>
+        /// 200 OK if the cancellation was successful,  
+        /// 400 Bad Request if the order couldn't be canceled,  
+        /// 500 Internal Server Error if an exception occurs.
+        /// </returns>
         [HttpPut("CancelOrder")]
-        public async Task<IActionResult> CancelOrderAsync(CancelOrderDTO cancelOrder)
+        public async Task<IActionResult> CancelOrderAsync(CancelOrderDTO cancelOrderDTO)
         {
             try
             {
-                int result = await _orderService.CancelOrder(cancelOrder);
+                int result = await _orderService.CancelOrder(cancelOrderDTO);
                 if (result == 0)
                 {
                     return BadRequest("unable to cancel the order");

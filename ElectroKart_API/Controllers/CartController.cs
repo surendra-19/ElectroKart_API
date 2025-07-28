@@ -18,6 +18,11 @@ namespace ElectroKart.API.Controllers
             _logger = logger;
             _cartService = cartService;
         }
+        /// <summary>
+        /// Retrieves all items in the customer's cart.
+        /// </summary>
+        /// <param name="customerId">The ID of the customer.</param>
+        /// <returns>List of items in the cart.</returns>
         [HttpGet("GetCartItems/{customerId}")]
         public async Task<IActionResult> GetCartItemsAsync([FromRoute] int customerId)
         {
@@ -32,6 +37,12 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        /// <summary>
+        /// Removes a specific item from the customer's cart.
+        /// </summary>
+        /// <param name="itemId">The ID of the item to remove.</param>
+        /// <param name="customerId">The ID of the customer.</param>
+        /// <returns>200 OK if removed, 404 Not Found if item doesn't exist.</returns>
         [HttpPut("RemoveFromCart/{customerId}/{itemId}")]
         public async Task<IActionResult> RemoveFromCartAsync([FromRoute] int itemId, int customerId)
         {
@@ -57,6 +68,11 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        /// <summary>
+        /// Clears all items from the customer's cart.
+        /// </summary>
+        /// <param name="customerId">The ID of the customer.</param>
+        /// <returns>200 OK if successful, 400 Bad Request if failed.</returns>
         [HttpDelete("ClearCart/{customerId}")]
         public async Task<IActionResult> ClearCartAsync([FromRoute] int customerId)
         {
@@ -78,6 +94,11 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        /// <summary>
+        /// Adds an item to the customer's cart.
+        /// </summary>
+        /// <param name="cartItemDTO">Details of the item to add.</param>
+        /// <returns>200 OK if added successfully, 400 Bad Request if failed.</returns>
         [HttpPost("AddToCart")]
         public async Task<IActionResult> AddToCartAsync([FromBody] CartItemDTO cartItemDTO)
         {

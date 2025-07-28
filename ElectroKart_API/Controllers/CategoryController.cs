@@ -14,6 +14,14 @@ namespace ElectroKart.API.Controllers
         {
             _categoryService = categoryService; _logger = logger;
         }
+        /// <summary>
+        /// Retrieves all product categories.
+        /// </summary>
+        /// <returns>
+        /// 200 OK with a list of categories,  
+        /// 404 Not Found if no categories exist,  
+        /// 500 Internal Server Error if an exception occurs.
+        /// </returns>
         [HttpGet("GetAllCategories")]
         public async Task<IActionResult> GetAllCategoriesAsync()
         {

@@ -60,6 +60,15 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
             }
         }
+        /// <summary>
+        /// Searches for products by their name.
+        /// </summary>
+        /// <param name="productName">The name or partial name of the product to search for.</param>
+        /// <returns>
+        /// 200 OK with the list of matching products and success message,  
+        /// 404 Not Found if no products match,  
+        /// 500 Internal Server Error if an exception occurs.
+        /// </returns>
         [HttpGet("SearchProduct")]
         public async Task<IActionResult> SearchProductByNameAsync([FromQuery] string productName)
         {
@@ -82,6 +91,15 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, RetrieveProductsMessages.Failed);
             }
         }
+        /// <summary>
+        /// Retrieves all products belonging to a specific category.
+        /// </summary>
+        /// <param name="categoryId">The ID of the category.</param>
+        /// <returns>
+        /// 200 OK with the list of products and a success message,  
+        /// 404 Not Found if no products are found,  
+        /// 500 Internal Server Error if an exception occurs.
+        /// </returns>
         [HttpGet("GetProductByCategoryId/{categoryId}")]
         public async Task<IActionResult> GetProductByCategoryIdAsync([FromRoute] int categoryId)
         {

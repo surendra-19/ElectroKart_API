@@ -19,6 +19,17 @@ namespace ElectroKart.API.Controllers
             _authService = authService;
             _logger = logger;
         }
+
+        /// <summary>
+        /// Authenticates a user using their email/phone and password.
+        /// </summary>
+        /// <param name="logindto">Login credentials (email/phone and password).</param>
+        /// <returns>
+        /// 200 OK with customer data if login is successful,  
+        /// 401 Unauthorized if password is incorrect,  
+        /// 404 Not Found if user is not found,  
+        /// 500 Internal Server Error for any other issue.
+        /// </returns>
         [HttpPost("loginUser")]
         public async Task<IActionResult> LoginUserAsync([FromBody] LoginDTO logindto)
         {
@@ -49,6 +60,16 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(500, LoginMessages.ServerError);
             }
         }
+
+        /// <summary>
+        /// Registers a new user with email, phone, and password.
+        /// </summary>
+        /// <param name="signUpDTO">User registration details.</param>
+        /// <returns>
+        /// 200 OK if registration is successful,  
+        /// 409 Conflict if email or phone already exists,  
+        /// 500 Internal Server Error for any other issue.
+        /// </returns>
         [HttpPost("SignUpUser")]
         public async Task<IActionResult> RegisterUserAsync([FromBody] SignUpDTO signUpDTO)
         {
