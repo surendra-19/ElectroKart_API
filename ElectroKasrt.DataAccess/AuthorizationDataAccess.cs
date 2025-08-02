@@ -50,6 +50,7 @@ namespace ElectroKart.DataAccess
                     Email = reader.GetString(reader.GetOrdinal("Email")),
                     Phone = reader.GetString(reader.GetOrdinal("ContactNumber")),
                     Address = reader.GetString(reader.GetOrdinal("Address")),
+                    Role = reader.GetString(reader.GetOrdinal("Role"))
                 };
             }
 

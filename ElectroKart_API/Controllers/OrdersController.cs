@@ -2,11 +2,13 @@
 using ElectroKart.Common.Messages;
 using ElectroKart.Common.Models;
 using ElectroKart.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectroKart.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase

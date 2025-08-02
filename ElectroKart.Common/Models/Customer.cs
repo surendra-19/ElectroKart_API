@@ -30,5 +30,8 @@ namespace ElectroKart.Common.Models
         [Required]
         [Column(TypeName = "nvarchar(50)")]
         public string Password { get; set; } = "";
+        [Required]
+        [Column(TypeName = "nvarchar(10)")]
+        public string Role { get; set; } = "User";
     }
 }

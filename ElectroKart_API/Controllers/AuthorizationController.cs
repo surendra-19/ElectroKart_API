@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using ElectroKart.Common.DTOS;
 using ElectroKart.Common.Data;
 using ElectroKart.Common.Messages;
+using ElectroKart.Common.JwtConfiguration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectroKart.API.Controllers
 {
@@ -14,10 +16,12 @@ namespace ElectroKart.API.Controllers
     {
         private readonly AuthorizationService _authService;
         private readonly ILogger<AuthorizationController> _logger;
-        public AuthorizationController(AuthorizationService authService, ILogger<AuthorizationController> logger)
+        private readonly JwtTokenService _jwtTokenService;
+        public AuthorizationController(AuthorizationService authService, ILogger<AuthorizationController> logger,JwtTokenService jwtTokenService)
         {
             _authService = authService;
             _logger = logger;
+            _jwtTokenService = jwtTokenService;
         }
 
         /// <summary>
@@ -39,7 +43,8 @@ namespace ElectroKart.API.Controllers
 
                 if (result.Status == 1)
                 {
-                    return Ok(new { result.Customer, Message = LoginMessages.LoginSuccess });
+                    var token = _jwtTokenService.GenerateToken(result.Customer!);
+                    return Ok(new { result.Customer,Token = token, Message = LoginMessages.LoginSuccess });
                 }
                 else if (result.Status == 2)
                 {
@@ -98,5 +103,31 @@ namespace ElectroKart.API.Controllers
                 return StatusCode(500,SignUpMessages.ServerError);
             }
         }
+        //[HttpPost("ForgotPassword")]
+        //public async Task<IActionResult> ForgotPasswordAsync([FromBody] string email)
+        //{
+        //    try
+        //    {
+        //        return Ok("Password reset link has been sent to your email.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An error occurred while processing forgot password for email: {Email}", email);
+        //        return StatusCode(500, "An error occurred while processing your request.");
+        //    }
+        //}
+        //[HttpPost("ResetPassword")]
+        //public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordDTO resetPasswordDTO)
+        //{
+        //    try
+        //    {
+        //        return Ok("Password has been reset successfully.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "An error occurred while resetting password for email: {Email}", resetPasswordDTO.Email);
+        //        return StatusCode(500, "An error occurred while processing your request.");
+        //    }
+        //}
     }
 }

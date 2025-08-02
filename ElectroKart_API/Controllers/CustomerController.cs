@@ -3,9 +3,11 @@ using ElectroKart.Common.Messages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ElectroKart.Service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ElectroKart.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
