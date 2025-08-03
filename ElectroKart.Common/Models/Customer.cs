@@ -28,7 +28,7 @@ namespace ElectroKart.Common.Models
         [Column(TypeName = "nvarchar(250)")]
         public string Address { get; set; } = "";
         [Required]
-        [Column(TypeName = "nvarchar(50)")]
+        [Column(TypeName = "nvarchar(255)")]
         public string Password { get; set; } = "";
         [Required]
         [Column(TypeName = "nvarchar(10)")]

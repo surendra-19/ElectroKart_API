@@ -109,6 +109,7 @@ namespace ElectroKart.DataAccess
             command.Parameters.AddWithValue("@Phone", signUp.Phone);
             command.Parameters.AddWithValue("@Address", signUp.Address);
             command.Parameters.AddWithValue("@Password", signUp.Password);
+            command.Parameters.AddWithValue("@Role",signUp.Role);
 
             await connection.OpenAsync();
 

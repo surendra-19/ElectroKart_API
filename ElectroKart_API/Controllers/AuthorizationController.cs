@@ -93,6 +93,10 @@ namespace ElectroKart.API.Controllers
                 {
                     return Conflict(SignUpMessages.PhoneAlreadyExists);
                 }
+                else if (string.IsNullOrEmpty(signUpDTO.Password) || signUpDTO.Password.Length < 6)
+                {
+                    return BadRequest("Password must be at least 6 characters long.");
+                }
                 var result = await _authService.RegisterUser(signUpDTO);
                 return result == 1 ? Ok(SignUpMessages.SignUpSuccess) : StatusCode(500, SignUpMessages.ServerError);
 
